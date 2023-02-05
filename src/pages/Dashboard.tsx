@@ -5,7 +5,7 @@ import { Geometry } from "@turf/turf"
 import CustomSlider from "../components/CustomSlider"
 import WorkPanel from "../components/WorkPanel"
 import { ControlOptions, ControlOptionType } from "../types"
-import StaticPanel from "../components/StaticPanel"
+import StatistiquePanel from "../components/StatistiquePanel"
 
 const Dashboard = () => {
   const [jsonData, setJSONData] = useState<Geometry>()
@@ -28,14 +28,14 @@ const Dashboard = () => {
 
     const reader = new FileReader()
 
-    if (event.target.files) {
+    if (event.target.files?.length) {
       reader.readAsText(event.target.files[0])
-    }
-    reader.onload = async (e) => {
-      const text = e.target?.result
-      if (text) {
-        const resObj = JSON.parse(text.toString())
-        setJSONData(resObj)
+      reader.onload = async () => {
+        const text = reader.result
+        if (text) {
+          const resObj = JSON.parse(text.toString())
+          setJSONData(resObj)
+        }
       }
     }
   }
@@ -54,7 +54,7 @@ const Dashboard = () => {
           bgcolor: "#FFFFFFAA",
         }}
       >
-        <Button variant="contained" component="label">
+        <Button variant="contained" component="label" data-testid="load_geojson_btn">
           LOAD GEOJSON
           <input hidden accept="application/geo+json" type="file" onChange={getBase64} />
         </Button>
@@ -80,7 +80,7 @@ const Dashboard = () => {
         scale={controlOptions.coverage}
         floors={controlOptions.floorCount}
       />
-      <StaticPanel jsonData={jsonData} controlOptions={controlOptions} />
+      <StatistiquePanel jsonData={jsonData} controlOptions={controlOptions} />
     </Box>
   )
 }

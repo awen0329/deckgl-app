@@ -38,6 +38,7 @@ const CustomSlider: React.FC<CustomSliderProps> = ({ label, value, onChange }) =
       <Grid container spacing={2} alignItems="center">
         <Grid item xs>
           <Slider
+            data-testid={`${label}_slider_controller`}
             value={typeof value === "number" ? value : 0}
             onChange={handleSliderChange}
             aria-labelledby="input-slider"
@@ -45,6 +46,7 @@ const CustomSlider: React.FC<CustomSliderProps> = ({ label, value, onChange }) =
         </Grid>
         <Grid item>
           <Input
+            data-testid={`${label}_input_controller`}
             value={value}
             size="small"
             onChange={handleInputChange}
