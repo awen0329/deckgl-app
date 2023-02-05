@@ -1,6 +1,7 @@
 import React from "react"
 import { styled } from "@mui/material/styles"
 import { Box, Grid, Typography, Slider, Input as MuiInput } from "@mui/material"
+import { TEST_ID_INPUT_CONTROLLER, TEST_ID_SLIDER_CONTROLLER } from "../constants/CustomSlider"
 
 const Input = styled(MuiInput)`
   width: 42px;
@@ -38,7 +39,7 @@ const CustomSlider: React.FC<CustomSliderProps> = ({ label, value, onChange }) =
       <Grid container spacing={2} alignItems="center">
         <Grid item xs>
           <Slider
-            data-testid={`${label}_slider_controller`}
+            data-testid={TEST_ID_SLIDER_CONTROLLER}
             value={typeof value === "number" ? value : 0}
             onChange={handleSliderChange}
             aria-labelledby="input-slider"
@@ -46,7 +47,7 @@ const CustomSlider: React.FC<CustomSliderProps> = ({ label, value, onChange }) =
         </Grid>
         <Grid item>
           <Input
-            data-testid={`${label}_input_controller`}
+            data-testid={TEST_ID_INPUT_CONTROLLER}
             value={value}
             size="small"
             onChange={handleInputChange}

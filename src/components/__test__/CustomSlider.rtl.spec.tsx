@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 import { fireEvent, render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { TEST_ID_INPUT_CONTROLLER, TEST_ID_SLIDER_CONTROLLER } from "../../constants/CustomSlider"
 import CustomSlider from "../CustomSlider"
 
 const onChangeSpy = jest.fn()
@@ -24,7 +25,7 @@ describe("Custom Slider", () => {
       onChange: onChangeSpy,
     }
     render(<CustomSlider {...defaultProps} />)
-    const inputEl = screen.getByTestId("Plot coverage %_input_controller")
+    const inputEl = screen.getByTestId(TEST_ID_INPUT_CONTROLLER)
     const input = inputEl.getElementsByTagName("input")[0]
     await userEvent.type(input, "10")
     expect(onChangeSpy).toHaveBeenCalled()
@@ -37,7 +38,7 @@ describe("Custom Slider", () => {
       onChange: onChangeSpy,
     }
     render(<CustomSlider {...defaultProps} />)
-    const inputEl = screen.getByTestId("Plot coverage %_input_controller")
+    const inputEl = screen.getByTestId(TEST_ID_INPUT_CONTROLLER)
     const input = inputEl.getElementsByTagName("input")[0]
     await fireEvent.input(input, { target: { value: "" } })
     expect(onChangeSpy).toHaveBeenCalled()
@@ -50,7 +51,7 @@ describe("Custom Slider", () => {
       onChange: onChangeSpy,
     }
     render(<CustomSlider {...defaultProps} />)
-    const inputEl = screen.getByTestId("Plot coverage %_input_controller")
+    const inputEl = screen.getByTestId(TEST_ID_INPUT_CONTROLLER)
     const input = inputEl.getElementsByTagName("input")[0]
     fireEvent.blur(input)
     expect(onChangeSpy).toHaveBeenCalled()
@@ -63,7 +64,7 @@ describe("Custom Slider", () => {
       onChange: onChangeSpy,
     }
     render(<CustomSlider {...defaultProps} />)
-    const inputEl = screen.getByTestId("Plot coverage %_input_controller")
+    const inputEl = screen.getByTestId(TEST_ID_INPUT_CONTROLLER)
     const input = inputEl.getElementsByTagName("input")[0]
     fireEvent.blur(input)
     expect(onChangeSpy).toHaveBeenCalled()
@@ -76,7 +77,7 @@ describe("Custom Slider", () => {
       onChange: onChangeSpy,
     }
     render(<CustomSlider {...defaultProps} />)
-    const inputEl = screen.getByTestId("Plot coverage %_input_controller")
+    const inputEl = screen.getByTestId(TEST_ID_INPUT_CONTROLLER)
     const input = inputEl.getElementsByTagName("input")[0]
     fireEvent.blur(input)
     expect(onChangeSpy).not.toHaveBeenCalled()
@@ -89,7 +90,7 @@ describe("Custom Slider", () => {
       onChange: onChangeSpy,
     }
     render(<CustomSlider {...defaultProps} />)
-    const sliderEl = screen.getByTestId("Plot coverage %_slider_controller")
+    const sliderEl = screen.getByTestId(TEST_ID_SLIDER_CONTROLLER)
     expect(sliderEl).toBeInTheDocument()
     await fireEvent.mouseDown(sliderEl, { clientX: 162, clientY: 302 })
     expect(onChangeSpy).toHaveBeenCalled()

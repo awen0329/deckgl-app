@@ -6,6 +6,7 @@ import CustomSlider from "../components/CustomSlider"
 import WorkPanel from "../components/WorkPanel"
 import { ControlOptions, ControlOptionType } from "../types"
 import StatistiquePanel from "../components/StatistiquePanel"
+import { TEST_ID_LOAD_GEOJSON_BUTTON } from "../constants/Dashboard"
 
 const Dashboard = () => {
   const [jsonData, setJSONData] = useState<Geometry>()
@@ -54,7 +55,7 @@ const Dashboard = () => {
           bgcolor: "#FFFFFFAA",
         }}
       >
-        <Button variant="contained" component="label" data-testid="load_geojson_btn">
+        <Button variant="contained" component="label" data-testid={TEST_ID_LOAD_GEOJSON_BUTTON}>
           LOAD GEOJSON
           <input hidden accept="application/geo+json" type="file" onChange={getBase64} />
         </Button>

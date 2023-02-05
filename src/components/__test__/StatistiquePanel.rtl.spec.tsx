@@ -4,6 +4,10 @@ import { render, screen } from "@testing-library/react"
 import StatistiquePanel from "../StatistiquePanel"
 import * as utils from "../../utils"
 import { sourceData } from "../../test-utils/fixture"
+import {
+  TEST_ID_LAND_AREA_LABEL,
+  TEST_ID_STATISTIQUE_PANEL,
+} from "../../constants/StatistiquePanel"
 
 describe("StatistiquePanel", () => {
   it("should render statistique once json data exist", async () => {
@@ -16,10 +20,10 @@ describe("StatistiquePanel", () => {
       },
     }
     render(<StatistiquePanel {...defaultProps} />)
-    const panel = screen.getByTestId("statistique_panel")
+    const panel = screen.getByTestId(TEST_ID_STATISTIQUE_PANEL)
     expect(panel).toBeInTheDocument()
     const { landArea } = utils.getStatistique(defaultProps)
-    const landAreaTypo = screen.getByTestId("land_area")
+    const landAreaTypo = screen.getByTestId(TEST_ID_LAND_AREA_LABEL)
     expect(landAreaTypo.innerHTML).toContain(landArea.toString())
   })
 
@@ -33,7 +37,7 @@ describe("StatistiquePanel", () => {
       },
     }
     render(<StatistiquePanel {...defaultProps} />)
-    const landAreaTypo = screen.getByTestId("land_area")
+    const landAreaTypo = screen.getByTestId(TEST_ID_LAND_AREA_LABEL)
     expect(landAreaTypo.innerHTML).toContain("0")
   })
 })

@@ -1,25 +1,16 @@
-// @ts-nocheck
 import React, { useMemo } from "react"
 import { Map, ViewState } from "react-map-gl"
 import DeckGL from "@deck.gl/react/typed"
 import { GeoJsonLayer } from "@deck.gl/layers/typed"
 import { center, Feature, Geometry, transformScale } from "@turf/turf"
+import { GEOJSON_PROPERTIES } from "../constants/WorkPanel"
 
 interface WorkPanelProps {
-  sourceData: Geometry | undefined
+  sourceData?: Geometry
   mapStyle?: string
   height?: number
   scale?: number
   floors?: number
-}
-
-const INITIAL_VIEWSTATE = {
-  latitude: 46,
-  longitude: 6,
-  zoom: Number(process.env.REACT_APP_INITIAL_ZOOM),
-  maxZoom: Number(process.env.REACT_APP_INITIAL_MAX_ZOOM),
-  pitch: Number(process.env.REACT_APP_INITIAL_PITCH),
-  bearing: Number(process.env.REACT_APP_INITIAL_BEARING),
 }
 
 const WorkPanel: React.FC<WorkPanelProps> = ({
@@ -29,11 +20,10 @@ const WorkPanel: React.FC<WorkPanelProps> = ({
   scale = 100,
   floors = 1,
 }) => {
-  const viewState: ViewState = {
+  const viewState: Partial<ViewState> = {
     latitude: sourceData ? center(sourceData).geometry.coordinates[1] : 46,
     longitude: sourceData ? center(sourceData).geometry.coordinates[0] : 6,
     zoom: Number(process.env.REACT_APP_INITIAL_ZOOM),
-    maxZoom: Number(process.env.REACT_APP_INITIAL_MAX_ZOOM),
     pitch: Number(process.env.REACT_APP_INITIAL_PITCH),
     bearing: Number(process.env.REACT_APP_INITIAL_BEARING),
   }
@@ -43,6 +33,7 @@ const WorkPanel: React.FC<WorkPanelProps> = ({
       const originalPolygon: Feature = {
         type: "Feature",
         geometry: sourceData,
+        properties: {},
       }
 
       const features: Feature[] = Array.from({ length: floors }).map((_, index: number) => {
@@ -56,24 +47,18 @@ const WorkPanel: React.FC<WorkPanelProps> = ({
       return [
         new GeoJsonLayer({
           id: "polygon-area",
+          // @ts-ignore
           data: originalPolygon,
           opacity: 0.1,
         }),
         new GeoJsonLayer({
           id: "building-v3",
+          // @ts-ignore
           data: {
             type: "FeatureCollection",
             features,
           },
-          opacity: 0.3,
-          stroked: true,
-          filled: true,
-          getFillColor: [0, 100, 100],
-          extruded: true,
-          wireframe: true,
-          getElevation: (f) => f.properties.height,
-          getLineColor: [0, 0, 0],
-          pickable: true,
+          ...GEOJSON_PROPERTIES,
         }),
       ]
     }
@@ -82,7 +67,7 @@ const WorkPanel: React.FC<WorkPanelProps> = ({
   }, [sourceData, height, scale, floors])
 
   return (
-    <DeckGL layers={layers} initialViewState={viewState || INITIAL_VIEWSTATE} controller={true}>
+    <DeckGL layers={layers} initialViewState={viewState} controller={true}>
       <Map
         reuseMaps
         mapStyle={mapStyle}
