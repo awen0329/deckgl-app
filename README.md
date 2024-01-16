@@ -1,7 +1,3 @@
-## Author
-
-Andrus Wen
-
 ## App Version
 
 v1.0
